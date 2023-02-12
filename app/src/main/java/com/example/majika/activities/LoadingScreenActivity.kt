@@ -1,9 +1,11 @@
-package com.example.majika
+package com.example.majika.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.example.majika.MainActivity
+import com.example.majika.R
 
 class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
