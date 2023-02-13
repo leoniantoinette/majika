@@ -76,7 +76,7 @@ class CabangRestoran : AppCompatActivity() {
     }
 
     private fun showResult(results: Data) {
-        for (result in results.data) printLog( "title: ${result.title}" )
+        for (result in results.data) printLog( "title: ${result.name}" )
         cabangAdapter.setData( results.data )
     }
 }

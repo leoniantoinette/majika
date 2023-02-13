@@ -21,7 +21,16 @@ class CabangAdapter (var results: ArrayList<Data.Result>, val listener: OnAdapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = results[position]
-        holder.view.textView.text = data.name
+        holder.view.textView1.text = data.name
+        holder.view.textView2.text = data.popular_food
+        holder.view.textView3.text = data.address
+        holder.view.textView4.text = data.contact_person
+        holder.view.textView5.text = data.phone_number
+        holder.view.textView6.text = data.longitude
+        holder.view.textView7.text = data.latitude
+
+
+
 
         holder.view.setOnClickListener { listener.onClick( data) }
     }
