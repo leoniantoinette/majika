@@ -1,6 +1,7 @@
 package com.example.majika
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -18,6 +19,11 @@ class MainActivity : AppCompatActivity() {
         mbutton.setOnClickListener{
             val i = Intent(this, CabangRestoran::class.java)
             startActivity(i)
+        }
+
+        val nbutton = findViewById<Button>(R.id.button_to_list_twibbon)
+        nbutton.setOnClickListener{
+
         }
     }
 }

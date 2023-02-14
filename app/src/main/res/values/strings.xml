@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Majika</string>
     <string name="go_to_cabang_restoran">Cabang Restoran</string>
+    <string name="go_to_twibbon">Twibbon</string>
 </resources>

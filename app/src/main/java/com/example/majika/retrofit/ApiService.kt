@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiService {
 
-    var BASE_URL:String="http://192.168.56.1:3000/v1/"
+    var BASE_URL:String="http://localhost/v1/"
     val endpoint: ApiEndpoint
         get() {
             val retrofit = Retrofit.Builder()
