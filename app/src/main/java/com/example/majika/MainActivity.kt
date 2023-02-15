@@ -1,13 +1,11 @@
 package com.example.majika
 
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
-import androidx.databinding.DataBindingUtil
 import com.example.majika.activities.CabangRestoran
+import com.example.majika.activities.Twibbon
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         val nbutton = findViewById<Button>(R.id.button_to_list_twibbon)
         nbutton.setOnClickListener{
-
+            val i = Intent(this, Twibbon::class.java)
+            startActivity(i)
         }
     }
 }

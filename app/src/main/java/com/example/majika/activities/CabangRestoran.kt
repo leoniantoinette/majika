@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +44,6 @@ class CabangRestoran : AppCompatActivity() {
 
         cabangAdapter = CabangAdapter(arrayListOf(), object : CabangAdapter.OnAdapterListener {
             override fun onClick(data: Data.Result) {
-
                 val gmmIntentUri = Uri.parse("geo:" + data.longitude +","+data.latitude+"?q="+data.address)
                 val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                 mapIntent.setPackage("com.google.android.apps.maps")
@@ -58,6 +59,7 @@ class CabangRestoran : AppCompatActivity() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = cabangAdapter
+
         }
 
 

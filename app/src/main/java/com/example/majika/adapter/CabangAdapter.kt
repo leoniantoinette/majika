@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
 import com.example.majika.model.Data
 import kotlinx.android.synthetic.main.adapter_cabang.view.*
 import kotlin.collections.ArrayList
+
 
 class CabangAdapter (var results: ArrayList<Data.Result>, val listener: OnAdapterListener):
 
@@ -50,3 +52,4 @@ class CabangAdapter (var results: ArrayList<Data.Result>, val listener: OnAdapte
 
     }
 }
+
