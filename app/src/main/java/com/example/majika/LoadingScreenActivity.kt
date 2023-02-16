@@ -1,11 +1,12 @@
-package com.example.majika.activities
+package com.example.majika
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.WindowManager
 import android.widget.ImageView
-import com.example.majika.MainActivity
-import com.example.majika.R
+import androidx.appcompat.app.AppCompatActivity
 
 class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,4 +23,5 @@ class LoadingScreenActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }

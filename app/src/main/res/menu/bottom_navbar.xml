@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Twibbon"
+        android:id="@+id/twibbon"
+        android:icon="@drawable/baseline_camera_alt_24"
+        />
+    <item android:title="Cabang"
+        android:id="@+id/cabang"
+        android:icon="@drawable/baseline_location_on_24" />
+    <item android:title="Menu"
+        android:id="@+id/menu"
+        android:icon="@drawable/baseline_food_bank_24" />
+    <item android:title="Keranjang"
+        android:id="@+id/keranjang"
+        android:icon="@drawable/baseline_shopping_cart_24" />
+</menu>

@@ -7,49 +7,48 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.majika.model.CabangRestoranModel
 import com.example.majika.R
-import com.example.majika.model.Data
-import kotlinx.android.synthetic.main.adapter_cabang.view.*
-import kotlin.collections.ArrayList
 
+class CabangAdapter(private val cabangList: ArrayList<CabangRestoranModel>) :
+    RecyclerView.Adapter<CabangAdapter.CabangRestoranViewHolder>() {
 
-class CabangAdapter (var results: ArrayList<Data.Result>, val listener: OnAdapterListener):
-
-    RecyclerView.Adapter<CabangAdapter.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder (
-        LayoutInflater.from( parent.context ).inflate( R.layout.adapter_cabang,
-            parent, false)
-
-
-    )
-
-    override fun getItemCount() = results.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = results[position]
-        holder.view.textView1.text = data.name
-        holder.view.textView2.text = data.address
-        holder.view.textView3.text = "  "+ data.popular_food + " (Favorit Food)"
-        holder.view.textView4.text = "  "+ data.contact_person
-        holder.view.textView5.text = "  "+ data.phone_number
-
-        holder.view.setOnClickListener { listener.onClick( data) }
+    class CabangRestoranViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val name : TextView = itemView.findViewById(R.id.textView1)
+        val popular_food : TextView = itemView.findViewById(R.id.textView3)
+        val address: TextView = itemView.findViewById(R.id.textView2)
+        val contact_person : TextView = itemView.findViewById(R.id.textView4)
+        val phoneNumber : TextView = itemView.findViewById(R.id.textView5)
+        val buttonMaps : ImageButton = itemView.findViewById(R.id.mapButton)
     }
 
-    class ViewHolder(val view: View): RecyclerView.ViewHolder(view)
-
-    fun setData(data: List<Data.Result>){
-        this.results.clear()
-        this.results.addAll(data)
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CabangRestoranViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cardview_cabang_restoran, parent, false)
+        return CabangRestoranViewHolder(itemView)
     }
 
-    interface OnAdapterListener {
-        fun onClick(data: Data.Result)
-
+    override fun getItemCount(): Int {
+        return cabangList.size
     }
+
+    override fun onBindViewHolder(holder: CabangRestoranViewHolder, position: Int) {
+        val data = cabangList[position]
+        holder.name.text = data.name
+        holder.popular_food.text = data.popular_food
+        holder.address.text = data.address
+        holder.contact_person.text = data.contact_person
+        holder.phoneNumber.text = data.phone_number
+        holder.buttonMaps.setOnClickListener {
+            val gmmIntentUri = Uri.parse("geo:" + data.longitude +","+data.latitude+"?q="+data.address)
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(holder.itemView.context, mapIntent, null)
+        }
+    }
+
+
 }
 

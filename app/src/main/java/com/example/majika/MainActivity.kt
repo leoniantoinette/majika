@@ -1,28 +1,42 @@
 package com.example.majika
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import com.example.majika.activities.CabangRestoran
-import com.example.majika.activities.Twibbon
+import androidx.fragment.app.Fragment
+import com.example.majika.databinding.ActivityMainBinding
+import com.example.majika.fragment.CabangRestoran
+import com.example.majika.fragment.Keranjang
+import com.example.majika.fragment.Menu
+import com.example.majika.fragment.Twibbon
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val mbutton = findViewById<Button>(R.id.button_to_list_cabang_restoran)
-        mbutton.setOnClickListener{
-            val i = Intent(this, CabangRestoran::class.java)
-            startActivity(i)
-        }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        changeFragment(Twibbon())
 
-        val nbutton = findViewById<Button>(R.id.button_to_list_twibbon)
-        nbutton.setOnClickListener{
-            val i = Intent(this, Twibbon::class.java)
-            startActivity(i)
+        binding.bottomNavigation.setOnItemSelectedListener {
+
+            when (it.itemId) {
+                R.id.twibbon -> changeFragment(Twibbon())
+                R.id.cabang -> changeFragment(CabangRestoran())
+                R.id.menu -> changeFragment(Menu())
+                R.id.keranjang -> changeFragment(Keranjang())
+                else -> {
+                }
+            }
+            true
         }
+    }
+    private fun changeFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.layout_frame, fragment)
+        fragmentTransaction.commit()
     }
 }
