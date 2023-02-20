@@ -8,5 +8,6 @@ data class DataMenu (
     @SerializedName("currency") val currency: String,
     @SerializedName("price") val price: Double,
     @SerializedName("sold") val sold: Int,
-    @SerializedName("type") val type: String
-)
+    @SerializedName("type") val type: String,
+    @SerializedName("count") var count: Int,
+    )
