@@ -2,173 +2,159 @@ package com.example.majika.fragment
 
 import android.Manifest
 import android.annotation.SuppressLint
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import com.example.majika.R
+import com.google.common.util.concurrent.ListenableFuture
+import com.example.majika.permission.Permission
 import android.content.Context
-import android.graphics.ImageFormat
-import android.graphics.SurfaceTexture
-import android.hardware.camera2.CameraCaptureSession
-import android.hardware.camera2.CameraDevice
-import android.hardware.camera2.CameraManager
-import android.hardware.camera2.CaptureRequest
-import android.media.ImageReader
 import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
-import android.os.HandlerThread
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.majika.R
-import com.example.majika.permission.Permission
-import java.io.File
-import java.io.FileOutputStream
-import java.util.*
-private const val val1 = "arg1"
-private const val val2 = "arg2"
-class Twibbon : Fragment(), TextureView.SurfaceTextureListener {
+import androidx.core.content.ContextCompat
 
+private const val var1 = "arg1"
+private const val var2 = "arg2"
+class Twibbon : Fragment() {
+
+    private lateinit var content: Context
+    private lateinit var prosesCamera: ListenableFuture<ProcessCameraProvider>
+    private lateinit var textPopUp: TextView
+    private lateinit var buttonTakePhoto: Button
+    private lateinit var previewView: PreviewView
+    private lateinit var previewImage: ImageView
+    private lateinit var artis: ImageView
     private var arg1: String? = null
     private var arg2: String? = null
-
-    lateinit var capReq: CaptureRequest.Builder
-    lateinit var handler: Handler
-    private lateinit var handlerThread: HandlerThread
-    private lateinit var cameraManager: CameraManager
-    lateinit var textureView: TextureView
-    lateinit var cameraCaptureSession: CameraCaptureSession
-    lateinit var cameraDevice: CameraDevice
-    lateinit var imageReader: ImageReader
-    lateinit var textWarning: TextView
+    private var imagePreview: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            arg1 = it.getString(com.example.majika.fragment.val1)
-            arg2 = it.getString(com.example.majika.fragment.val2)
+            arg1 = it.getString(var1)
+            arg2 = it.getString(var2)
         }
+        prosesCamera = ProcessCameraProvider.getInstance(content)
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        // membuat layout
+        viewInflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_twibbon, container, false)
+    // membuat view inflater
+        val view = viewInflater.inflate(R.layout.fragment_twibbon, container, false)
 
-        textWarning = view.findViewById(R.id.warningCameraTwibbon)
-        textWarning.visibility = View.INVISIBLE
+        previewView = view.findViewById(R.id.previewView)
+        previewView.implementationMode = PreviewView.ImplementationMode.PERFORMANCE
+        previewView.scaleType = PreviewView.ScaleType.FILL_CENTER
+        previewView.visibility = View.VISIBLE
+        previewImage = view.findViewById(R.id.imagePreview)
+        artis = view.findViewById(R.id.twibbon)
+        artis.visibility = View.VISIBLE
 
-        textureView = view.findViewById(R.id.textureViewTwibbon)
-        cameraManager = requireActivity().getSystemService(Context.CAMERA_SERVICE) as CameraManager
-        handlerThread = HandlerThread("videoThread")
-        handlerThread.start()
-        handler = Handler(handlerThread.looper)
+        // text pop up peringatan kameta
+        textPopUp = view.findViewById(R.id.popUpTwibbon)
+        textPopUp.visibility = View.GONE
+        buttonTakePhoto = view.findViewById(R.id.buttoncapture)
+        buttonTakePhoto.visibility = View.VISIBLE
 
-        if (!Permission.isPermissionGranted(
-                requireActivity() as AppCompatActivity,
-                Manifest.permission.CAMERA
+        // Permission untuk mengakses kamera
+        if (!Permission.isPermissionGranted(requireActivity() as AppCompatActivity,Manifest.permission.CAMERA)) {
+            textPopUp.visibility = View.VISIBLE
+            textPopUp.text = resources.getString(R.string.twibbon_warning_no_permissions)
+            buttonTakePhoto.visibility = View.GONE
+            previewView.visibility = View.GONE
+            artis.visibility = View.GONE
+
+            this.requestPermissions(
+                arrayOf(Manifest.permission.CAMERA),
+                Permission.getRequestCode()
             )
-        ) {
-            textWarning.visibility = View.VISIBLE
-            textWarning.text ="Please check your camera permission to continue this menu"
-            Permission.requestPermission(
-                requireActivity() as AppCompatActivity,
-                Manifest.permission.CAMERA
-            )
-            return view
-        } else {
-            textureView.surfaceTextureListener = this
-
-            imageReader = ImageReader.newInstance(1080, 1920, ImageFormat.JPEG, 1)
-            imageReader.setOnImageAvailableListener({ p0 ->
-                val image = p0?.acquireLatestImage()
-                val buffer = image!!.planes[0].buffer
-                val bytes = ByteArray(buffer.remaining())
-                buffer.get(bytes)
-
-                val file = File(
-                    activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                    Calendar.getInstance().time.toString() + "gambar.jpeg"
-                )
-                val opStream = FileOutputStream(file)
-
-                opStream.write(bytes)
-
-                opStream.close()
-                image.close()
-
-                Toast.makeText(activity as AppCompatActivity, "Gambar berhasil di capture", Toast.LENGTH_SHORT).show()
-            }, handler)
-
-            view.findViewById<Button>(R.id.btnCapture).setOnClickListener {
-                capReq = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)
-                capReq.addTarget(imageReader.surface)
-                cameraCaptureSession.capture(capReq.build(), null, null)
-            }
             return view
         }
+
+        // jika gambar tidak ditampilkan maka lakukan hal berikut
+        if (!imagePreview) {
+            // melakukan capture gambar
+            previewView.visibility = View.VISIBLE
+            previewImage.visibility = View.GONE
+            buttonTakePhoto.text = "Capture"
+        } else {
+            // melakukan preview image dan tampilkan button take again
+            previewView.visibility = View.GONE
+            previewImage.visibility = View.VISIBLE
+            buttonTakePhoto.text = "Take Again"
+        }
+
+        // Yang dilakukan ketika menekan button take photo
+        buttonTakePhoto.setOnClickListener {
+            // jika image tidak sedang ditampilkan maka akan melakukan take photo
+            // tombol belum diklik
+            if (!imagePreview) {
+                previewView.visibility = View.GONE
+                previewImage.visibility = View.VISIBLE
+                buttonTakePhoto.text = "Take Again"
+                imagePreview = true
+                val bitmap = previewView.bitmap
+                previewImage.setImageBitmap(bitmap)
+                Toast.makeText(content, "Gambar telah di capture", Toast.LENGTH_SHORT).show()
+
+
+            } else {
+                // jika gambar sudah diambil (tombol telah diklik)
+                previewView.visibility = View.VISIBLE
+                previewImage.visibility = View.GONE
+                buttonTakePhoto.text = "Capture"
+                imagePreview = false
+            }
+        }
+        return view
+    }
+
+    private fun bindPreview(cameraProvider: ProcessCameraProvider) {
+        val cameraSelector: CameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
+            .build()
+
+
+        val preview: Preview = Preview.Builder()
+            .build()
+
+        preview.setSurfaceProvider(previewView.surfaceProvider)
+
+        cameraProvider.bindToLifecycle(content as LifecycleOwner, cameraSelector, preview)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        prosesCamera.addListener({
+            val cameraProvider = prosesCamera.get()
+            bindPreview(cameraProvider)
+        }, ContextCompat.getMainExecutor(content))
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        content = context
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (this::cameraDevice.isInitialized) { cameraDevice.close() }
-
-        handler.removeCallbacksAndMessages(null)
-        handlerThread.quitSafely()
+        prosesCamera.get().unbindAll()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        Permission.handlePermissionsResult(requestCode, permissions, grantResults)
-    }
 
-    @SuppressLint("MissingPermission")
-    private fun startCamera() {
-        cameraManager.openCamera(cameraManager.cameraIdList[0], object: CameraDevice.StateCallback(){
-            override fun onOpened(p0: CameraDevice) {
-                cameraDevice = p0
-                capReq = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
-                val surface = Surface(textureView.surfaceTexture)
-                capReq.addTarget(surface)
-
-                cameraDevice.createCaptureSession(listOf(surface, imageReader.surface), object: CameraCaptureSession.StateCallback(){
-                    override fun onConfigureFailed(p0: CameraCaptureSession) {
-
-                    }
-
-                    override fun onConfigured(p0: CameraCaptureSession) {
-                        cameraCaptureSession = p0
-                        cameraCaptureSession.setRepeatingRequest(capReq.build(), null, null)
-                    }
-                }, handler)
-            }
-
-            override fun onDisconnected(p0: CameraDevice) {
-
-            }
-
-            override fun onError(p0: CameraDevice, p1: Int) {
-
-            }
-        }, handler)
-    }
-
-    override fun onSurfaceTextureAvailable(p0: SurfaceTexture, p1: Int, p2: Int) {
-        startCamera()
-    }
-
-    override fun onSurfaceTextureSizeChanged(p0: SurfaceTexture, p1: Int, p2: Int) {
-    }
-
-    override fun onSurfaceTextureDestroyed(p0: SurfaceTexture): Boolean {
-        return false
-    }
-
-    override fun onSurfaceTextureUpdated(p0: SurfaceTexture) {
-    }
 }
