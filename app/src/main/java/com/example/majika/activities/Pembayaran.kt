@@ -65,6 +65,7 @@ class Pembayaran : AppCompatActivity() {
             }
 
             scanner_view.setOnClickListener {
+                gagal.visibility = View.GONE
                 codeScanner.startPreview()
             }
         }
@@ -73,7 +74,6 @@ class Pembayaran : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
-        gagal.visibility = View.GONE
     }
 
     override fun onPause() {
@@ -118,7 +118,7 @@ class Pembayaran : AppCompatActivity() {
     }
 
     private fun showPaymentStatus(dataPembayaran: DataPembayaran) {
-        if (dataPembayaran.status == "success") {
+        if (dataPembayaran.status == "SUCCESS") {
             berhasil.visibility = View.VISIBLE
             // delay 5 seconds then redirect to menu
             Handler().postDelayed({
@@ -128,7 +128,6 @@ class Pembayaran : AppCompatActivity() {
             }, 5000)
 
         } else {
-            totalPayment.text = "Payment Failed"
             gagal.visibility = View.VISIBLE
         }
     }
