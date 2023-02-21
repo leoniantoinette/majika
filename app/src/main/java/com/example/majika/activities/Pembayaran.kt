@@ -18,6 +18,7 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.majika.MainActivity
 import com.example.majika.R
+import com.example.majika.header.header_pembayaran
 import com.example.majika.retrofit.Retrofit
 import com.example.majika.retrofit.data.DataPembayaran
 import com.example.majika.retrofit.endpoint.PembayaranEndpoint
@@ -33,6 +34,11 @@ class Pembayaran : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.pembayaran)
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.layout_header, header_pembayaran())
+        fragmentTransaction.commit()
 
         setupPermission()
         codeScanner()

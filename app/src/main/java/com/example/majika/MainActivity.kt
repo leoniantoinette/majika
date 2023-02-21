@@ -26,8 +26,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigation.selectedItemId = R.id.menu
-        changeFragment(Menu(), header_menu())
+        val intent = getIntent();
+        val extraData = intent.getStringExtra("fragment");
+        if (extraData == "keranjang") {
+            binding.bottomNavigation.selectedItemId = R.id.keranjang
+            changeFragment(Keranjang(), header_keranjang())
+        } else  {
+            binding.bottomNavigation.selectedItemId = R.id.menu
+            changeFragment(Menu(), header_menu())
+        }
 
         binding.bottomNavigation.setOnItemSelectedListener {
 

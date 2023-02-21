@@ -30,7 +30,7 @@ class header_keranjang : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_header_pembayaran, container, false)
+        return inflater.inflate(R.layout.fragment_header_keranjang, container, false)
     }
 
 
