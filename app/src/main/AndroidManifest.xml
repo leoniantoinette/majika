@@ -33,6 +33,7 @@
             android:name=".activities.Pembayaran"
             android:exported="false" />
         <activity
+
             android:name=".MainActivity"
             android:exported="true"></activity>
     </application>
