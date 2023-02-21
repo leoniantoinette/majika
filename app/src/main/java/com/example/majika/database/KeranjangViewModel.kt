@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ViewModel(application: Application): AndroidViewModel(application) {
+class KeranjangViewModel(application: Application): AndroidViewModel(application) {
     private val repository: KeranjangRepository
     private var readAll: LiveData<List<KeranjangModel>>
 

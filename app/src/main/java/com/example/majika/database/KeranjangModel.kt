@@ -14,4 +14,10 @@ class KeranjangModel {
     var harga: String = ""
     @ColumnInfo(name = "jumlah")
     var jumlah: String = ""
+
+    constructor(nama: String, harga: String, jumlah: String) {
+        this.nama = nama
+        this.harga = harga
+        this.jumlah = jumlah
+    }
 }
