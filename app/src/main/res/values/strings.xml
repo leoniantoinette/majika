@@ -3,6 +3,6 @@
     <string name="go_to_cabang_restoran">Cabang Restoran</string>
     <string name="go_to_twibbon">Twibbon</string>
     <string name="twibbon_warning_no_permissions">Camera permission is required to use this feature</string>
-
+    <string name="scan">Scan</string>
 
 </resources>
