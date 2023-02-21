@@ -1,5 +1,6 @@
 package com.example.majika
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         binding.bottomNavigation.selectedItemId = R.id.menu
         changeFragment(Menu(), header_menu())
