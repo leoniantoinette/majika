@@ -1,6 +1,6 @@
 package com.example.majika.adapter
 
-import android.provider.ContactsContract.Data
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +10,12 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
-import com.example.majika.retrofit.data.DataListMenu
+import com.example.majika.database.KeranjangViewModel
 import com.example.majika.retrofit.data.DataMenu
-import kotlinx.android.synthetic.main.menu_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MenuAdapter ( val list:ArrayList<DataMenu>) : RecyclerView.Adapter<MenuAdapter.Holder>(), Filterable{
+class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangViewModel: KeranjangViewModel) : RecyclerView.Adapter<MenuAdapter.Holder>(), Filterable{
 
     private var listFilter = ArrayList<DataMenu>()
 
@@ -36,32 +35,34 @@ class MenuAdapter ( val list:ArrayList<DataMenu>) : RecyclerView.Adapter<MenuAda
 
     }
 
-    private fun setMenuList(list: ArrayList<DataMenu>) {
-        this.listFilter = list
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val layout = LayoutInflater.from(parent.context).inflate(R.layout.menu_item,parent, false)
         return Holder(layout)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.view.namaMakanan.text = listFilter?.get(position)?.name
-        holder.view.price.text = listFilter?.get(position)?.price.toString()
-        holder.view.sold.text = listFilter?.get(position)?.sold.toString()
-        holder.view.description.text = listFilter?.get(position)?.description
+        holder.name.text = listFilter.get(position).name
+        holder.price.text = listFilter.get(position).price.toString()
+        holder.sold.text = listFilter.get(position).sold.toString()
+        holder.description.text = listFilter.get(position).description
 
         // click listener for add button
         holder.incButton.setOnClickListener(View.OnClickListener {
-            listFilter?.get(position)?.count = listFilter?.get(position)?.count?.plus(1)!!
-            holder.count.text = listFilter?.get(position)?.count.toString()
+            listFilter.get(position).count = listFilter.get(position).count.plus(1)
+            holder.count.text = listFilter.get(position).count.toString()
+            keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).count)
+            Log.d("INC : ", listFilter.get(position).toString())
+
         })
 
         // click listener for minus button
         holder.decButton.setOnClickListener(View.OnClickListener {
-            if (listFilter?.get(position)?.count!! > 0) {
-                listFilter?.get(position)?.count = listFilter?.get(position)?.count?.minus(1)!!
-                holder.count.text = listFilter?.get(position)?.count.toString()
+            if (listFilter.get(position).count > 0) {
+                listFilter.get(position).count = listFilter.get(position).count.minus(1)
+                holder.count.text = listFilter.get(position).count.toString()
+                keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).count)
+                Log.d("DEC : ", listFilter.get(position).toString())
+
             }
         })
 
@@ -113,22 +114,6 @@ class MenuAdapter ( val list:ArrayList<DataMenu>) : RecyclerView.Adapter<MenuAda
                 notifyDataSetChanged()
             }
         }
-    }
-
-    fun incrementCount(position: Int){
-        listFilter[position].count++
-        notifyDataSetChanged()
-    }
-
-    fun decrementCount(position: Int){
-        if (listFilter[position].count > 0){
-            listFilter[position].count--
-        }
-        notifyDataSetChanged()
-    }
-
-    fun getCount(position: Int): Int{
-        return listFilter[position].count
     }
 
 }

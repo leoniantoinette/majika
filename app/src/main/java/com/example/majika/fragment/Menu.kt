@@ -17,11 +17,15 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
 import com.example.majika.adapter.MenuAdapter
+import com.example.majika.database.KeranjangDAO
+import com.example.majika.database.KeranjangViewModel
+import com.example.majika.database.RoomDataBase
 import com.example.majika.retrofit.Retrofit
 import com.example.majika.retrofit.data.DataMenu
 import com.example.majika.retrofit.endpoint.MenuEndpoint
@@ -44,6 +48,11 @@ class Menu : Fragment() {
     private var menuList : ArrayList<DataMenu> = arrayListOf()
     private var recyclerViewState: Parcelable? = null
     private val RECYCLER_VIEW_STATE_KEY = "recycler_view_state"
+
+    private lateinit var db : RoomDataBase
+    private lateinit var keranjangDao : KeranjangDAO
+    private lateinit var keranjangViewModel : KeranjangViewModel
+
 
 
     override fun onCreateView(
@@ -76,7 +85,7 @@ class Menu : Fragment() {
             val items = savedInstanceState?.getParcelableArrayList<DataMenu>("menuItems")
             if (items != null) {
                 menuList = items
-                adapter = MenuAdapter(menuList)
+                adapter = MenuAdapter(menuList, keranjangViewModel)
                 recyclerView.adapter = adapter
             }
 
@@ -84,6 +93,13 @@ class Menu : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // room database
+        db = RoomDataBase.getDatabase(requireContext())
+        Log.d("DB CREATED", db.toString())
+        keranjangDao = db.keranjangDAO()
+        keranjangViewModel = ViewModelProvider(this).get(KeranjangViewModel::class.java)
+
 
         // temperature
         temperatureTextView = view.findViewById(R.id.temp)
@@ -152,7 +168,7 @@ class Menu : Fragment() {
         }
         operation.await()
 
-        adapter = MenuAdapter(menuList)
+        adapter = MenuAdapter(menuList, keranjangViewModel)
         recyclerView.adapter = adapter
     }
 
