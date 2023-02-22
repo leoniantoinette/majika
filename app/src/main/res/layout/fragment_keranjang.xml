@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,17 +9,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvKeranjang"
         android:layout_width="match_parent"
-        android:layout_height="600dp" />
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/paymentDetails"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="600dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/blueSixth"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:layout_width="253dp"
+            android:layout_width="255dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -26,22 +33,28 @@
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total:" />
+                android:text="Total:"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView15"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp300.000" />
+                android:text="Rp300.000"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/bayarBtn"
-            android:layout_width="154dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Bayar" />
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="8dp"
+            android:text="Bayar"
+            android:textSize="18sp"
+            app:cornerRadius="15dp" />
     </LinearLayout>
 
 
