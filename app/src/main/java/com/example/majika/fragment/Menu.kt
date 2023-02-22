@@ -36,15 +36,10 @@ import kotlinx.coroutines.launch
 
 class Menu : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
     private  var adapter: MenuAdapter? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView : SearchView
-    private lateinit var temperatureTextView: TextView
-    private var currentTemperature: Float = 0f
     private var menuList : ArrayList<DataMenu> = arrayListOf()
     private var recyclerViewState: Parcelable? = null
     private val RECYCLER_VIEW_STATE_KEY = "recycler_view_state"
@@ -99,10 +94,6 @@ class Menu : Fragment() {
         Log.d("DB CREATED", db.toString())
         keranjangDao = db.keranjangDAO()
         keranjangViewModel = ViewModelProvider(this).get(KeranjangViewModel::class.java)
-
-
-        // temperature
-        temperatureTextView = view.findViewById(R.id.temp)
 
         // searchView
         searchView = view.findViewById(R.id.search_view)
@@ -172,43 +163,5 @@ class Menu : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        val sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        val temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
-        if (temperatureSensor != null) {
-            sensorManager.registerListener(
-                temperatureListener,
-                temperatureSensor,
-                SensorManager.SENSOR_DELAY_NORMAL
-            )
-        } else {
-            temperatureTextView.text = "Temperature sensor not available"
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        val sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager.unregisterListener(temperatureListener)
-    }
-
-    private val temperatureListener = object : SensorEventListener {
-        override fun onSensorChanged(event: SensorEvent?) {
-            if (event != null) {
-                currentTemperature = event.values[0]
-                updateTemperatureText()
-            }
-        }
-
-        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-            // do nothing
-        }
-    }
-
-    private fun updateTemperatureText() {
-        temperatureTextView.text = "Temp: ${currentTemperature}°C"
-    }
 
 }
