@@ -38,4 +38,14 @@ class KeranjangViewModel(application: Application): AndroidViewModel(application
     fun getAllKeranjang(): LiveData<List<KeranjangModel>> {
         return readAll
     }
+
+    fun getKeranjangById(id: Int): LiveData<KeranjangModel> {
+        return repository.getKeranjangById(id)
+    }
+
+    fun updateJumlahKeranjang(id: Int, jumlah: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateJumlahKeranjang(id, jumlah)
+        }
+    }
 }

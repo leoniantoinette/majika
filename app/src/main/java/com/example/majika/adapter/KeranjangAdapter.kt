@@ -1,17 +1,20 @@
 package com.example.majika.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
 import com.example.majika.database.KeranjangModel
-import com.example.majika.retrofit.data.DataKeranjang
+import com.example.majika.database.KeranjangViewModel
+import com.example.majika.fragment.Keranjang
+import java.text.NumberFormat
+import java.util.*
 
-class KeranjangAdapter (private val keranjangList: List<KeranjangModel>) : RecyclerView.Adapter<KeranjangAdapter.KeranjangViewHolder>() {
+class KeranjangAdapter (private val keranjangList: List<KeranjangModel>, private val fragment: Keranjang, private val keranjangViewModel: KeranjangViewModel) : RecyclerView.Adapter<KeranjangAdapter.KeranjangViewHolder>() {
 
     class KeranjangViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val name : TextView = itemView.findViewById(R.id.namaMakanan)
@@ -28,23 +31,33 @@ class KeranjangAdapter (private val keranjangList: List<KeranjangModel>) : Recyc
     }
 
     override fun onBindViewHolder(holder: KeranjangViewHolder, position: Int) {
+        val formatter = NumberFormat.getInstance(Locale.getDefault())
+
         val data = keranjangList[position]
         holder.name.text = data.nama
-        holder.price.text = data.harga.toString()
+
+        holder.price.text = "Rp" + formatter.format(data.harga.toInt())
+        holder.count.text = data.jumlah.toString()
+        fragment.updateTotal()
 
         // click listener for add button
         holder.incButton.setOnClickListener(View.OnClickListener {
             keranjangList[position].jumlah = keranjangList[position].jumlah?.plus(1)!!
             holder.count.text = keranjangList[position].jumlah.toString()
+            Log.d("ID MODEL", keranjangList[position].toString())
+            keranjangViewModel.updateJumlahKeranjang(keranjangList[position].id, keranjangList[position].jumlah)
+            fragment.updateTotal()
         })
 
         // click listener for minus button
-//        holder.decButton.setOnClickListener(View.OnClickListener {
-//            if (keranjangList[position].count > 0) {
-//                keranjangList[position].count = keranjangList[position].count?.minus(1)!!
-//                holder.count.text = keranjangList[position].count.toString()
-//            }
-//        })
+        holder.decButton.setOnClickListener(View.OnClickListener {
+            if (keranjangList[position].jumlah > 0) {
+                keranjangList[position].jumlah = keranjangList[position].jumlah?.minus(1)!!
+                holder.count.text = keranjangList[position].jumlah.toString()
+                keranjangViewModel.updateJumlahKeranjang(keranjangList[position].id, keranjangList[position].jumlah)
+                fragment.updateTotal()
+            }
+        })
     }
 
     override fun getItemCount(): Int {

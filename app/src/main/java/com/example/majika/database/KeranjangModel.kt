@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Keranjang")
 data class KeranjangModel (
+    @PrimaryKey
+    var id: Int,
     @ColumnInfo(name = "nama")
     var nama: String,
     @ColumnInfo(name = "harga")
@@ -13,7 +15,4 @@ data class KeranjangModel (
     @ColumnInfo(name = "jumlah")
     var jumlah: Int
 
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
-}
+)
