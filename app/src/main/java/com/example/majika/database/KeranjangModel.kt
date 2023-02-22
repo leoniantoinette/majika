@@ -5,19 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Keranjang")
-class KeranjangModel {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+data class KeranjangModel (
     @ColumnInfo(name = "nama")
-    var nama: String = ""
+    var nama: String,
     @ColumnInfo(name = "harga")
-    var harga: String = ""
+    var harga: Double,
     @ColumnInfo(name = "jumlah")
-    var jumlah: String = ""
+    var jumlah: Int
 
-    constructor(nama: String, harga: String, jumlah: String) {
-        this.nama = nama
-        this.harga = harga
-        this.jumlah = jumlah
-    }
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
 }
