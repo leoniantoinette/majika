@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class DataMenu (
+    @SerializedName("id") val id : Int,
     @SerializedName("name") val name: String,
     @SerializedName("description") val description: String,
     @SerializedName("currency") val currency: String,
@@ -15,6 +16,7 @@ data class DataMenu (
     )  : Parcelable {
 
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -28,6 +30,7 @@ data class DataMenu (
     }
 
     override fun writeToParcel(p0: Parcel, p1: Int) {
+        p0.writeInt(id)
         p0.writeString(name)
         p0.writeString(description)
         p0.writeString(currency)
