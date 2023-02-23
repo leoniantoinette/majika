@@ -15,8 +15,18 @@ interface KeranjangDAO {
     @Query("SELECT * FROM Keranjang")
     fun getAllKeranjang(): LiveData<List<KeranjangModel>>
 
+    @Query("SELECT * FROM Keranjang")
+    fun getAllKeranjangList(): List<KeranjangModel>
+
     @Query("SELECT * FROM Keranjang WHERE id = :id")
     fun getKeranjangById(id: Int): LiveData<KeranjangModel>
+
+    @Query("SELECT jumlah FROM Keranjang WHERE id = :id")
+    fun getJumlahKeranjangById(id: Int): Int
+
+    @Query("SELECT COUNT(*) FROM Keranjang")
+    suspend fun getJumlahKeranjang(): Int
+
 
     @Query("UPDATE Keranjang SET jumlah = :jumlah WHERE id = :id")
     suspend fun updateJumlahKeranjang(id: Int, jumlah: Int)

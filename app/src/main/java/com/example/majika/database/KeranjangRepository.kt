@@ -24,6 +24,18 @@ class KeranjangRepository(private val keranjangDao: KeranjangDAO) {
         return keranjangDao.getKeranjangById(id)
     }
 
+    fun getJumlahKeranjangById(id: Int): Int {
+        return keranjangDao.getJumlahKeranjangById(id)
+    }
+
+    suspend fun getJumlahKeranjang(): Int {
+        return keranjangDao.getJumlahKeranjang()
+    }
+
+    fun getAllKeranjangList(): List<KeranjangModel> {
+        return keranjangDao.getAllKeranjangList()
+    }
+
     suspend fun updateJumlahKeranjang(id: Int, jumlah: Int) {
         keranjangDao.updateJumlahKeranjang(id, jumlah)
     }

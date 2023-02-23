@@ -10,18 +10,19 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
+import com.example.majika.database.KeranjangModel
 import com.example.majika.database.KeranjangViewModel
 import com.example.majika.retrofit.data.DataMenu
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangViewModel: KeranjangViewModel) : RecyclerView.Adapter<MenuAdapter.Holder>(), Filterable{
+class MenuAdapter ( private val keranjangList: ArrayList<KeranjangModel>, private val keranjangViewModel: KeranjangViewModel) : RecyclerView.Adapter<MenuAdapter.Holder>(), Filterable{
 
-    private var listFilter = ArrayList<DataMenu>()
+    private lateinit var listFilter : ArrayList<KeranjangModel>
 
     init {
-        listFilter = list   // copy list to listFilter
+        listFilter = keranjangList   // copy list to listFilter
     }
 
     class Holder(val view : View) : RecyclerView.ViewHolder(view) {
@@ -43,26 +44,27 @@ class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangV
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val formatter = NumberFormat.getInstance(Locale.getDefault())
-        holder.name.text = listFilter.get(position).name
-        holder.price.text = "Rp" + formatter.format(listFilter.get(position).price.toInt())
-        holder.sold.text = formatter.format(listFilter.get(position).sold) + " Sold"
-        holder.description.text = listFilter.get(position).description
+        holder.name.text = listFilter.get(position).nama
+        holder.price.text = "Rp" + formatter.format(listFilter.get(position).harga.toInt())
+        holder.sold.text = formatter.format(listFilter.get(position).terjual)
+        holder.description.text = listFilter.get(position).deskripsi
+        holder.count.text = listFilter.get(position).jumlah.toString()
 
         // click listener for add button
         holder.incButton.setOnClickListener(View.OnClickListener {
-            listFilter.get(position).count = listFilter.get(position).count.plus(1)
-            holder.count.text = listFilter.get(position).count.toString()
-            keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).count)
+            listFilter.get(position).jumlah = listFilter.get(position).jumlah.plus(1)
+            holder.count.text = listFilter.get(position).jumlah.toString()
+            keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).jumlah)
             Log.d("INC : ", listFilter.get(position).toString())
 
         })
 
         // click listener for minus button
         holder.decButton.setOnClickListener(View.OnClickListener {
-            if (listFilter.get(position).count > 0) {
-                listFilter.get(position).count = listFilter.get(position).count.minus(1)
-                holder.count.text = listFilter.get(position).count.toString()
-                keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).count)
+            if (listFilter.get(position).jumlah > 0) {
+                listFilter.get(position).jumlah = listFilter.get(position).jumlah.minus(1)
+                holder.count.text = listFilter.get(position).jumlah.toString()
+                keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).jumlah)
                 Log.d("DEC : ", listFilter.get(position).toString())
 
             }
@@ -75,13 +77,13 @@ class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangV
     }
 
     fun filterCategory(category : String ){
-        val resultList = ArrayList<DataMenu>()
-        for (row in list) {
+        val resultList = ArrayList<KeranjangModel>()
+        for (row in keranjangList) {
             // if category is All, show all
             if (category == "All") {
                 resultList.add(row)
             }
-            else if (row.type.lowercase(Locale.ROOT).contains(category.lowercase(Locale.ROOT))) {
+            else if (row.tipe.lowercase(Locale.ROOT).contains(category.lowercase(Locale.ROOT))) {
                 resultList.add(row)
             }
         }
@@ -96,25 +98,23 @@ class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangV
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charSearch = constraint.toString()
                 if (charSearch.isEmpty()) {
-                    listFilter = list
+                    listFilter = keranjangList
                 } else {
-                    val resultList = ArrayList<DataMenu>()
-                    for (row in list) {
-                        if (row.name.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))) {
+                    val resultList = ArrayList<KeranjangModel>()
+                    for (row in keranjangList) {
+                        if (row.nama.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))) {
                             resultList.add(row)
                         }
                     }
                     listFilter = resultList
-
                 }
                 val filterResults = FilterResults()
                 filterResults.values = listFilter
-
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                listFilter = results?.values as ArrayList<DataMenu>
+                listFilter = results?.values as ArrayList<KeranjangModel>
                 notifyDataSetChanged()
             }
         }

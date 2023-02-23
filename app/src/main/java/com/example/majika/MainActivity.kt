@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.majika.database.KeranjangViewModel
+import com.example.majika.database.ViewModelFactory
 import com.example.majika.databinding.ActivityMainBinding
 import com.example.majika.fragment.CabangRestoran
 import com.example.majika.fragment.Keranjang
@@ -19,12 +22,18 @@ var id_header: Int = 0
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: KeranjangViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModelFactory = ViewModelFactory(application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(KeranjangViewModel::class.java)
 
         val intent = getIntent();
         val extraData = intent.getStringExtra("fragment");
