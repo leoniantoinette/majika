@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -39,6 +40,11 @@ class Pembayaran : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.layout_header, header_pembayaran())
         fragmentTransaction.commit()
+
+        val intent = getIntent();
+        val totalPayment = intent.getStringExtra("total");
+        val totalTextView = findViewById<TextView>(R.id.totalPayment)
+        totalTextView.text = "Total : " + totalPayment
 
         setupPermission()
         codeScanner()

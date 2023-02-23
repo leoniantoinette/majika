@@ -52,6 +52,7 @@ class Keranjang : Fragment() {
         bayarBtn = view.findViewById(R.id.bayarBtn)
         bayarBtn.setOnClickListener {
             val i = Intent(requireActivity(), Pembayaran::class.java)
+            i.putExtra("total", totalTextView.text.toString())
             startActivity(i)
         }
         totalTextView = view.findViewById(R.id.total)
@@ -89,7 +90,7 @@ class Keranjang : Fragment() {
             var total = 0;
             keranjangList = it
             for (i in it) {
-                total += i.harga.toInt()
+                total += i.harga.toInt() * i.jumlah.toInt()
             }
             this.totalTextView.text = "Rp" + formatter.format(total.toInt())
         })
