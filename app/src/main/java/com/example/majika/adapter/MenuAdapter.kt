@@ -44,7 +44,7 @@ class MenuAdapter (private val keranjangList: ArrayList<KeranjangModel>, private
         val formatter = NumberFormat.getInstance(Locale.getDefault())
         holder.name.text = listFilter.get(position).nama
         holder.price.text = "Rp" + formatter.format(listFilter.get(position).harga.toInt())
-        holder.sold.text = formatter.format(listFilter.get(position).terjual)
+        holder.sold.text = formatter.format(listFilter.get(position).terjual) + " Sold"
         holder.description.text = listFilter.get(position).deskripsi
         holder.count.text = listFilter.get(position).jumlah.toString()
 

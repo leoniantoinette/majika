@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
-            android:text="Total : Rp 150.000"
+            android:text="Total : Rp0"
             android:textAlignment="center"
             android:textColor="#434343"
             android:textSize="22sp" />
