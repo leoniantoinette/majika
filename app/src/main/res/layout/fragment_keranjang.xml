@@ -6,13 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".fragment.Keranjang">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvKeranjang"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="576dp"
-        app:layout_constraintBottom_toTopOf="@id/paymentDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="648dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvKeranjang"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toTopOf = "@+id/paymentDetails"/>
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/paymentDetails"
