@@ -30,6 +30,7 @@
             android:layout_marginBottom="15dp"
             android:text="@string/scan"
             android:textAlignment="center"
+            android:textColor="#434343"
             android:textSize="34sp"
             android:textStyle="bold" />
 
@@ -48,6 +49,7 @@
             android:layout_marginVertical="20dp"
             android:text="Total : Rp 150.000"
             android:textAlignment="center"
+            android:textColor="#434343"
             android:textSize="22sp" />
 
         <LinearLayout

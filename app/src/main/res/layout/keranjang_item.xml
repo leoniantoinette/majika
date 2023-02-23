@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:outlineAmbientShadowColor="#3F51B5">
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardList"
@@ -14,9 +13,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="4dp"
-        android:outlineAmbientShadowColor="#3F51B5"
-        android:outlineSpotShadowColor="#D31E1E"
-        app:cardBackgroundColor="@color/blueFifth"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -29,10 +25,10 @@
             android:padding="16dp">
 
             <Button
-                android:id="@+id/incBtn"
+                android:id="@+id/decBtn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:text="+" />
+                android:text="-" />
 
             <TextView
                 android:id="@+id/quantity"
@@ -42,10 +38,11 @@
                 android:text="0" />
 
             <Button
-                android:id="@+id/decBtn"
+                android:id="@+id/incBtn"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:text="-" />
+                android:text="+" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -71,19 +68,18 @@
                 android:padding="3dp"
                 android:text="Rp1000"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/bluePrimary"
-                android:textSize="18sp" />
+                android:textColor="#757575"
+                android:textSize="16sp" />
 
 
             <TextView
                 android:id="@+id/total"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginTop="7dp"
                 android:padding="3dp"
                 android:text="Jumlah"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/bluePrimary"
+                android:textColor="#343434"
                 android:textSize="18sp" />
 
         </LinearLayout>

@@ -9,14 +9,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvKeranjang"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="576dp"
+        app:layout_constraintBottom_toTopOf="@id/paymentDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/paymentDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/blueSixth"
+        android:background="#EEEEEE"
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
         android:paddingVertical="15dp"
@@ -25,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:layout_width="255dp"
+            android:layout_width="235dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -34,13 +37,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Total:"
-                android:textSize="20sp" />
+                android:textColor="#343434"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp300.000"
+                android:textColor="#434343"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -56,6 +62,5 @@
             android:textSize="18sp"
             app:cornerRadius="15dp" />
     </LinearLayout>
-
 
 </FrameLayout>
