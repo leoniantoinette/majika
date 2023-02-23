@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
 import com.example.majika.database.KeranjangViewModel
 import com.example.majika.retrofit.data.DataMenu
+import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -41,8 +42,9 @@ class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangV
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        val formatter = NumberFormat.getInstance(Locale.getDefault())
         holder.name.text = listFilter.get(position).name
-        holder.price.text = listFilter.get(position).price.toString()
+        holder.price.text = "Rp" + formatter.format(listFilter.get(position).price.toInt())
         holder.sold.text = listFilter.get(position).sold.toString()
         holder.description.text = listFilter.get(position).description
 
