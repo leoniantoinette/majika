@@ -130,6 +130,7 @@ class Menu : Fragment() {
 
         //Restore state
         menuList = arrayListOf()
+
         if (savedInstanceState != null ){
             recyclerViewState = savedInstanceState.getParcelable("recyclerViewState")
             recyclerViewState = savedInstanceState.getParcelable(RECYCLER_VIEW_STATE_KEY)

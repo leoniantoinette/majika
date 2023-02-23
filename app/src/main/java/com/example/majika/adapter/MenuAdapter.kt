@@ -45,7 +45,7 @@ class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangV
         val formatter = NumberFormat.getInstance(Locale.getDefault())
         holder.name.text = listFilter.get(position).name
         holder.price.text = "Rp" + formatter.format(listFilter.get(position).price.toInt())
-        holder.sold.text = listFilter.get(position).sold.toString()
+        holder.sold.text = formatter.format(listFilter.get(position).sold) + " Sold"
         holder.description.text = listFilter.get(position).description
 
         // click listener for add button
@@ -105,9 +105,11 @@ class MenuAdapter ( private val list:ArrayList<DataMenu>, private val keranjangV
                         }
                     }
                     listFilter = resultList
+
                 }
                 val filterResults = FilterResults()
                 filterResults.values = listFilter
+
                 return filterResults
             }
 
