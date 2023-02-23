@@ -34,6 +34,10 @@ Untuk menjalankan program pastikan Anda telah mendownload dan menginstall hal-ha
    ![Cabang Restoran](screenshot/cabang.png)
 3. Daftar Menu (Makanan dan Minuman) <br>
    ![Daftar Menu](screenshot/menu.png)
+   - Makanan <br>
+     ![Daftar Menu Makanan](screenshot/menu_food.png)
+   - Minuman <br>
+     ![Daftar Menu Minuman](screenshot/menu_drink.png)
 4. Keranjang <br>
    ![Keranjang](screenshot/keranjang.png)
 5. Pembayaran <br>
