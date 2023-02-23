@@ -9,22 +9,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.majika.R
 import com.example.majika.activities.Pembayaran
 import com.example.majika.adapter.KeranjangAdapter
 import com.example.majika.database.KeranjangDAO
-import com.example.majika.database.KeranjangModel
+import com.example.majika.model.KeranjangModel
 import com.example.majika.database.KeranjangViewModel
 import com.example.majika.database.RoomDataBase
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class Keranjang : Fragment() {
     private lateinit var adapter: KeranjangAdapter
@@ -38,7 +35,6 @@ class Keranjang : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -46,8 +42,6 @@ class Keranjang : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_keranjang, container, false)
-        // fetch data
-
         // bayar button
         bayarBtn = view.findViewById(R.id.bayarBtn)
         bayarBtn.setOnClickListener {

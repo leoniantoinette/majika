@@ -1,4 +1,4 @@
-package com.example.majika.database
+package com.example.majika.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -22,6 +22,4 @@ data class KeranjangModel (
     var tipe: String,
     @ColumnInfo(name = "jumlah")
     var jumlah: Int
-
-
 )

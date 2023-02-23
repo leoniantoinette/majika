@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.majika.R
 
-
 /**
  * A simple [Fragment] subclass.
  * Use the [header_twibbon.newInstance] factory method to
@@ -18,7 +17,6 @@ class header_twibbon : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -28,4 +26,3 @@ class header_twibbon : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_header_twibbon, container, false)
     }}
-

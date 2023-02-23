@@ -19,10 +19,8 @@ private const val ARG_PARAM2 = "param2"
  */
 class header_keranjang : Fragment() {
     // TODO: Rename and change types of parameters
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -32,6 +30,4 @@ class header_keranjang : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_header_keranjang, container, false)
     }
-
-
 }

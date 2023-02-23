@@ -1,6 +1,7 @@
 package com.example.majika.database
 
 import androidx.lifecycle.LiveData
+import com.example.majika.model.KeranjangModel
 
 class KeranjangRepository(private val keranjangDao: KeranjangDAO) {
 
@@ -8,32 +9,12 @@ class KeranjangRepository(private val keranjangDao: KeranjangDAO) {
         keranjangDao.insertKeranjang(keranjang)
     }
 
-    suspend fun updateKeranjang(keranjang: KeranjangModel) {
-        keranjangDao.updateKeranjang(keranjang)
-    }
-
-    suspend fun deleteKeranjang(keranjang: KeranjangModel) {
-        keranjangDao.deleteKeranjang(keranjang)
-    }
-
     fun getAllKeranjang(): LiveData<List<KeranjangModel>> {
         return keranjangDao.getAllKeranjang()
     }
 
-    fun getKeranjangById(id: Int): LiveData<KeranjangModel> {
-        return keranjangDao.getKeranjangById(id)
-    }
-
-    fun getJumlahKeranjangById(id: Int): Int {
-        return keranjangDao.getJumlahKeranjangById(id)
-    }
-
     suspend fun getJumlahKeranjang(): Int {
         return keranjangDao.getJumlahKeranjang()
-    }
-
-    fun getAllKeranjangList(): List<KeranjangModel> {
-        return keranjangDao.getAllKeranjangList()
     }
 
     suspend fun updateJumlahKeranjang(id: Int, jumlah: Int) {

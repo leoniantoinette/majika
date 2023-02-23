@@ -84,11 +84,9 @@ class CabangRestoran : Fragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             CabangRestoran().apply {

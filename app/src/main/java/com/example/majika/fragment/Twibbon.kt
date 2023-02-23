@@ -26,7 +26,6 @@ import androidx.core.content.ContextCompat
 private const val var1 = "arg1"
 private const val var2 = "arg2"
 class Twibbon : Fragment() {
-
     private lateinit var content: Context
     private lateinit var prosesCamera: ListenableFuture<ProcessCameraProvider>
     private lateinit var textPopUp: TextView
@@ -111,8 +110,6 @@ class Twibbon : Fragment() {
                 val bitmap = previewView.bitmap
                 previewImage.setImageBitmap(bitmap)
                 Toast.makeText(content, "Gambar telah di capture", Toast.LENGTH_SHORT).show()
-
-
             } else {
                 // jika gambar sudah diambil (tombol telah diklik)
                 previewView.visibility = View.VISIBLE
@@ -128,7 +125,6 @@ class Twibbon : Fragment() {
         val cameraSelector: CameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
             .build()
-
 
         val preview: Preview = Preview.Builder()
             .build()
@@ -155,6 +151,4 @@ class Twibbon : Fragment() {
         super.onDestroy()
         prosesCamera.get().unbindAll()
     }
-
-
 }

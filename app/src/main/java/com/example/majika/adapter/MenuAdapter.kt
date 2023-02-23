@@ -10,14 +10,13 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
-import com.example.majika.database.KeranjangModel
+import com.example.majika.model.KeranjangModel
 import com.example.majika.database.KeranjangViewModel
-import com.example.majika.retrofit.data.DataMenu
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MenuAdapter ( private val keranjangList: ArrayList<KeranjangModel>, private val keranjangViewModel: KeranjangViewModel) : RecyclerView.Adapter<MenuAdapter.Holder>(), Filterable{
+class MenuAdapter (private val keranjangList: ArrayList<KeranjangModel>, private val keranjangViewModel: KeranjangViewModel) : RecyclerView.Adapter<MenuAdapter.Holder>(), Filterable{
 
     private lateinit var listFilter : ArrayList<KeranjangModel>
 
@@ -34,7 +33,6 @@ class MenuAdapter ( private val keranjangList: ArrayList<KeranjangModel>, privat
         val count = view.findViewById<TextView>(R.id.quantity)
         val incButton = view.findViewById<Button>(R.id.incBtn)
         val decButton = view.findViewById<Button>(R.id.decBtn)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -66,7 +64,6 @@ class MenuAdapter ( private val keranjangList: ArrayList<KeranjangModel>, privat
                 holder.count.text = listFilter.get(position).jumlah.toString()
                 keranjangViewModel.updateJumlahKeranjang(listFilter.get(position).id, listFilter.get(position).jumlah)
                 Log.d("DEC : ", listFilter.get(position).toString())
-
             }
         })
 
@@ -89,7 +86,6 @@ class MenuAdapter ( private val keranjangList: ArrayList<KeranjangModel>, privat
         }
         listFilter = resultList
         notifyDataSetChanged()
-
     }
 
     // filter by MenuItem.name

@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.R
-import com.example.majika.database.KeranjangModel
+import com.example.majika.model.KeranjangModel
 import com.example.majika.database.KeranjangViewModel
 import com.example.majika.fragment.Keranjang
 import java.text.NumberFormat

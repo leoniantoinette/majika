@@ -1,11 +1,5 @@
 package com.example.majika.fragment
 
-import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import androidx.lifecycle.viewModelScope
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -15,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,20 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.majika.MainActivity
 import com.example.majika.R
-import com.example.majika.adapter.KeranjangAdapter
 import com.example.majika.adapter.MenuAdapter
-import com.example.majika.database.KeranjangDAO
-import com.example.majika.database.KeranjangModel
+import com.example.majika.model.KeranjangModel
 import com.example.majika.database.KeranjangViewModel
-import com.example.majika.database.RoomDataBase
 import com.example.majika.retrofit.Retrofit
 import com.example.majika.retrofit.data.DataMenu
 import com.example.majika.retrofit.endpoint.MenuEndpoint
 import kotlinx.coroutines.*
 
 class Menu : Fragment() {
-
-
     private  var adapter: MenuAdapter? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView : SearchView
@@ -46,9 +34,6 @@ class Menu : Fragment() {
     private val RECYCLER_VIEW_STATE_KEY = "recycler_view_state"
     private lateinit var keranjangViewModel : KeranjangViewModel
     private var keranjangList : List<KeranjangModel> = ArrayList()
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,23 +53,7 @@ class Menu : Fragment() {
         recyclerViewState = recyclerView?.layoutManager?.onSaveInstanceState()
         outState.putParcelable(RECYCLER_VIEW_STATE_KEY, recyclerViewState)
         outState.putParcelable("recyclerViewState", recyclerView.layoutManager?.onSaveInstanceState())
-//        outState.putParcelableArrayList("menuItems", menuList)
     }
-
-
-//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-//        super.onViewStateRestored(savedInstanceState)
-//        if (savedInstanceState != null) {
-//            recyclerViewState = savedInstanceState.getParcelable("recyclerViewState")
-//        }
-//            val items = savedInstanceState?.getParcelableArrayList<DataMenu>("menuItems")
-//            if (items != null) {
-//                menuList = items
-//                adapter = MenuAdapter(menuList, keranjangViewModel)
-//                recyclerView.adapter = adapter
-//            }
-//
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -146,8 +115,6 @@ class Menu : Fragment() {
     }
 
     private suspend fun fetchMenuData() {
-
-
         val menuAPI = Retrofit.getInstance().create(MenuEndpoint::class.java)
         val operation = GlobalScope.async(Dispatchers.Default) {
             val response = menuAPI.getMenu()
@@ -187,9 +154,6 @@ class Menu : Fragment() {
 
             keranjangList.add(keranjang)
         }
-
         return keranjangList
     }
-
-
 }

@@ -29,10 +29,8 @@ class header_menu : Fragment() {
     private lateinit var temperatureTextView: TextView
     private var currentTemperature: Float = 0f
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -43,12 +41,10 @@ class header_menu : Fragment() {
         return inflater.inflate(R.layout.fragment_header_menu, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // temperature
         temperatureTextView = view.findViewById(R.id.temp)
-
     }
 
     override fun onResume() {
@@ -89,5 +85,4 @@ class header_menu : Fragment() {
     private fun updateTemperatureText() {
         temperatureTextView.text = "Temp: ${currentTemperature}°C"
     }
-
 }

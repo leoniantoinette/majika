@@ -36,5 +36,4 @@ class header_pembayaran : Fragment() {
             startActivity(i)
         }
     }
-
 }
