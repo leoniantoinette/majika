@@ -74,7 +74,7 @@ class Keranjang : Fragment() {
         recyclerView.setHasFixedSize(true)
 
         keranjangViewModel.getAllKeranjang().observe(viewLifecycleOwner, {
-            keranjangList = it
+            keranjangList = it.filter { item -> item.jumlah > 0 }
             adapter = KeranjangAdapter(keranjangList, this, keranjangViewModel)
             recyclerView.adapter = adapter
         })

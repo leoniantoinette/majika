@@ -53,9 +53,13 @@ class KeranjangAdapter (private val keranjangList: List<KeranjangModel>, private
         holder.decButton.setOnClickListener(View.OnClickListener {
             if (keranjangList[position].jumlah > 0) {
                 keranjangList[position].jumlah = keranjangList[position].jumlah?.minus(1)!!
-                holder.count.text = keranjangList[position].jumlah.toString()
                 keranjangViewModel.updateJumlahKeranjang(keranjangList[position].id, keranjangList[position].jumlah)
-                fragment.updateTotal()
+                if (keranjangList[position].jumlah == 0) {
+                    notifyItemRemoved(position);
+                } else {
+                    holder.count.text = keranjangList[position].jumlah.toString()
+                    fragment.updateTotal()
+                }
             }
         })
     }
