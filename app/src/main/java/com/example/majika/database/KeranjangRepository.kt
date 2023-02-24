@@ -20,4 +20,8 @@ class KeranjangRepository(private val keranjangDao: KeranjangDAO) {
     suspend fun updateJumlahKeranjang(id: Int, jumlah: Int) {
         keranjangDao.updateJumlahKeranjang(id, jumlah)
     }
+
+    suspend fun resetJumlahKeranjang() {
+        keranjangDao.resetJumlahKeranjang()
+    }
 }

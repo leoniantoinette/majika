@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
@@ -19,6 +20,7 @@ import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.majika.MainActivity
 import com.example.majika.R
+import com.example.majika.database.KeranjangViewModel
 import com.example.majika.header.header_pembayaran
 import com.example.majika.retrofit.Retrofit
 import com.example.majika.retrofit.data.DataPembayaran
@@ -132,6 +134,11 @@ class Pembayaran : AppCompatActivity() {
     private fun showPaymentStatus(dataPembayaran: DataPembayaran) {
         if (dataPembayaran.status == "SUCCESS") {
             berhasil.visibility = View.VISIBLE
+
+            // reset jumlah keranjang
+            var keranjangViewModel = ViewModelProvider(this).get(KeranjangViewModel::class.java)
+            keranjangViewModel.resetJumlahKeranjang()
+
             // delay 5 seconds then redirect to menu
             Handler().postDelayed({
                 val i = Intent(this, MainActivity::class.java)

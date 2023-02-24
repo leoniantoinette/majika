@@ -25,6 +25,9 @@ interface KeranjangDAO {
     @Query("UPDATE Keranjang SET jumlah = :jumlah WHERE id = :id")
     suspend fun updateJumlahKeranjang(id: Int, jumlah: Int)
 
+    @Query("UPDATE Keranjang SET jumlah = 0")
+    suspend fun resetJumlahKeranjang()
+
     @Delete
     suspend fun deleteKeranjang(keranjang: KeranjangModel)
 }

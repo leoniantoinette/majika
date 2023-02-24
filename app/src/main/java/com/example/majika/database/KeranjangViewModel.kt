@@ -36,4 +36,10 @@ class KeranjangViewModel(application: Application): AndroidViewModel(application
             repository.updateJumlahKeranjang(id, jumlah)
         }
     }
+
+    fun resetJumlahKeranjang() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.resetJumlahKeranjang()
+        }
+    }
 }
